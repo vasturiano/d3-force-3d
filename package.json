@@ -27,11 +27,11 @@
     "url": "https://github.com/vasturiano/d3-force-3d.git"
   },
   "scripts": {
-    "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-collection:d3,d3-dispatch:d3,d3-binarytree:d3,d3-quadtree:d3,d3-octree:d3,d3-timer:d3 -f umd -n d3 -o build/d3-force-3d.js -- index.js",
-    "dist": "rm -rf dist && mkdir dist && rollup -f umd -n d3-force-3d -o dist/d3-force-3d.js -- index.js",
+    "build": "rm -rf build && mkdir build && rollup -c --banner \"$(preamble)\" -g d3-collection:d3,d3-dispatch:d3,d3-binarytree:d3,d3-quadtree:d3,d3-octree:d3,d3-timer:d3 -f umd -n d3 -o build/d3-force-3d.js -- index.js",
+    "bundle": "rollup -c --banner \"$(preamble)\" -f umd -n d3-force-3d -o build/d3-force-3d.bundle.js -- index.js",
     "pretest": "npm run build",
     "test": "tape 'test/**/*-test.js' && eslint index.js src",
-    "prepublish": "npm run test && npm run dist && uglifyjs --preamble \"$(preamble)\" build/d3-force-3d.js -c -m -o build/d3-force-3d.min.js && uglifyjs --preamble \"$(preamble)\" dist/d3-force-3d.js -c -m -o dist/d3-force-3d.min.js"
+    "prepublish": "npm run test && npm run bundle && uglifyjs --preamble \"$(preamble)\" build/d3-force-3d.js -c -m -o build/d3-force-3d.min.js && uglifyjs --preamble \"$(preamble)\" build/d3-force-3d.bundle.js -c -m -o build/d3-force-3d.bundle.min.js"
   },
   "dependencies": {
     "d3-binarytree": "~0.1",
@@ -45,6 +45,7 @@
     "eslint": "3",
     "package-preamble": "0.0",
     "rollup": "0.41",
+    "rollup-plugin-node-resolve": "^2.0.0",
     "tape": "4",
     "uglify-js": "^2.8.11"
   }
