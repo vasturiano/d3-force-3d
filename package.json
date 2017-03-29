@@ -1,7 +1,7 @@
 {
-  "name": "d3-force",
+  "name": "d3-force-3d",
   "version": "1.0.6",
-  "description": "Force-directed graph layout using velocity Verlet integration.",
+  "description": "Force-directed graph layout in 1D, 2D or 3D using velocity Verlet integration.",
   "keywords": [
     "d3",
     "d3-module",
@@ -10,26 +10,28 @@
     "graph",
     "force",
     "verlet",
-    "infovis"
+    "infovis",
+    "3d"
   ],
-  "homepage": "https://d3js.org/d3-force/",
+  "homepage": "https://github.com/vasturiano/d3-force-3d",
   "license": "BSD-3-Clause",
   "author": {
-    "name": "Mike Bostock",
-    "url": "http://bost.ocks.org/mike"
+    "name": "Vasco Asturiano",
+    "url": "https://bl.ocks.org/vasturiano"
   },
-  "main": "build/d3-force.js",
+  "main": "build/d3-force-3d.js",
   "module": "index",
   "jsnext:main": "index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/d3/d3-force.git"
+    "url": "https://github.com/vasturiano/d3-force-3d.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-collection:d3,d3-dispatch:d3,d3-binarytree:d3,d3-quadtree:d3,d3-octree:d3,d3-timer:d3 -f umd -n d3 -o build/d3-force.js -- index.js",
+    "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -g d3-collection:d3,d3-dispatch:d3,d3-binarytree:d3,d3-quadtree:d3,d3-octree:d3,d3-timer:d3 -f umd -n d3 -o build/d3-force-3d.js -- index.js",
+    "dist": "rm -rf dist && mkdir dist && rollup -f umd -n d3-force-3d -o dist/d3-force-3d.js -- index.js",
+    "pretest": "npm run build",
     "test": "tape 'test/**/*-test.js' && eslint index.js src",
-    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-force.js -c -m -o build/d3-force.min.js",
-    "postpublish": "git push && git push --tags && cd ../d3.github.com && git pull && cp ../d3-force/build/d3-force.js d3-force.v1.js && cp ../d3-force/build/d3-force.min.js d3-force.v1.min.js && git add d3-force.v1.js d3-force.v1.min.js && git commit -m \"d3-force ${npm_package_version}\" && git push && cd - && zip -j build/d3-force.zip -- LICENSE README.md build/d3-force.js build/d3-force.min.js"
+    "prepublish": "npm run test && npm run dist && uglifyjs --preamble \"$(preamble)\" build/d3-force-3d.js -c -m -o build/d3-force-3d.min.js && uglifyjs --preamble \"$(preamble)\" dist/d3-force-3d.js -c -m -o dist/d3-force-3d.min.js"
   },
   "dependencies": {
     "d3-binarytree": "~0.1",
