@@ -14,7 +14,7 @@
     "3d"
   ],
   "homepage": "https://github.com/vasturiano/d3-force-3d",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "author": {
     "name": "Vasco Asturiano",
     "url": "https://bl.ocks.org/vasturiano"
