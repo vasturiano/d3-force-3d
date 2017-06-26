@@ -433,7 +433,7 @@ function y() {
 
 The *y*-accessor is invoked for each [node](#simulation_nodes) in the simulation, being passed the *node* and its zero-based *index*. The resulting number is then stored internally, such that the target *y*-coordinate of each node is only recomputed when the force is initialized or when this method is called with a new *y*, and not on every application of the force.
 
-<a name="forceZ" href="#forceZ">#</a> d3.<b>forcez</b>([<i>z</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/z.js "Source")
+<a name="forceZ" href="#forceZ">#</a> d3.<b>forceZ</b>([<i>z</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/z.js "Source")
 
 Creates a new positioning force along the *z*-axis towards the given position [*z*](#z_z). If *z* is not specified, it defaults to 0.
 
