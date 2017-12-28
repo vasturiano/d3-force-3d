@@ -183,7 +183,7 @@ Assigns the array of *nodes* to this force. This method is called when a force i
 
 The centering force translates nodes uniformly so that the mean position of all nodes (the center of mass if all nodes have equal weight) is at the given position ⟨[*x*](#center_x),[*y*](#center_y),[*z*](#center_z)⟩. This force modifies the positions of nodes on each application; it does not modify velocities, as doing so would typically cause the nodes to overshoot and oscillate around the desired center. This force helps keeps nodes in the center of the viewport, and unlike the [positioning force](#positioning), it does not distort their relative positions.
 
-<a name="forceCenter" href="#forceCenter">#</a> d3.<b>forceCenter</b>([<i>x</i>[, <i>y</i>[, <i>y</i>]]]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/center.js#L1 "Source")
+<a name="forceCenter" href="#forceCenter">#</a> d3.<b>forceCenter</b>([<i>x</i>[, <i>y</i>[, <i>z</i>]]]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/center.js#L1 "Source")
 
 Creates a new centering force with the specified [*x*-](#center_x), [*y*-](#center_y) and [*z*-](#center_z) coordinates. If *x*, *y* and *z* are not specified, they default to ⟨0,0,0⟩.
 
