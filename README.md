@@ -503,6 +503,6 @@ If *radius* is specified, sets the circle *radius* to the specified number or fu
 
   If *y* is specified, sets the *y*-coordinate of the sphere center to the specified number and returns this force. If *y* is not specified, returns the current *y*-coordinate of the center, which defaults to zero.
 
-<a name="radial_z” href="#radial_z”>#</a> <i>radial</i>.<b>z</b>([<i>z</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/radial.js "Source")  
+  <a name="radial_z" href="#radial_z">#</a> <i>radial</i>.<b>z</b>([<i>z</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/radial.js "Source")  
 
 If *z* is specified, sets the *z*-coordinate of the sphere center to the specified number and returns this force. If *z* is not specified, returns the current *z*-coordinate of the center, which defaults to zero. 
