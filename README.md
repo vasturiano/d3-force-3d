@@ -377,7 +377,7 @@ If *distance* is specified, sets the maximum distance between nodes over which t
 
 #### Positioning
 
-The [*x*](#forceX)-, [*y*](#forceY)- and [*z*](#forceZ)-positioning forces push nodes towards a desired position along the given dimension with a configurable strength. The [*radial*](#forceRadial) force is similar, except it pushes nodes towards the closest point on a given circle. The strength of the force is proportional to the one-dimensional distance between the node’s position and the target position. While these forces can be used to position individual nodes, they are intended primarily for global forces that apply to all (or most) nodes.
+The [*x*](#forceX)-, [*y*](#forceY)- and [*z*](#forceZ)-positioning forces push nodes towards a desired position along the given dimension with a configurable strength. The [*radial*](#forceRadial) force is similar, except it pushes nodes towards the closest point on a given circle/sphere. The strength of the force is proportional to the one-dimensional distance between the node’s position and the target position. While these forces can be used to position individual nodes, they are intended primarily for global forces that apply to all (or most) nodes.
 
 <a name="forceX" href="#forceX">#</a> d3.<b>forceX</b>([<i>x</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/x.js "Source")
 
