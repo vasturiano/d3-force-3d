@@ -1,7 +1,8 @@
 import constant from "./constant";
 
-export default function(radius, x, y) {
+export default function(radius, x, y, z) {
   var nodes,
+      nDim,
       strength = constant(0.1),
       strengths,
       radiuses;
@@ -9,16 +10,19 @@ export default function(radius, x, y) {
   if (typeof radius !== "function") radius = constant(+radius);
   if (x == null) x = 0;
   if (y == null) y = 0;
+  if (z == null) z = 0;
 
   function force(alpha) {
     for (var i = 0, n = nodes.length; i < n; ++i) {
       var node = nodes[i],
           dx = node.x - x || 1e-6,
-          dy = node.y - y || 1e-6,
-          r = Math.sqrt(dx * dx + dy * dy),
+          dy = (node.y || 0) - y || 1e-6,
+          dz = (node.z || 0) - z || 1e-6,
+          r = Math.sqrt(dx * dx + dy * dy + dz * dz),
           k = (radiuses[i] - r) * strengths[i] * alpha / r;
       node.vx += dx * k;
-      node.vy += dy * k;
+      if (nDim>1) { node.vy += dy * k; }
+      if (nDim>2) { node.vz += dz * k; }
     }
   }
 
@@ -33,8 +37,10 @@ export default function(radius, x, y) {
     }
   }
 
-  force.initialize = function(_) {
-    nodes = _, initialize();
+  force.initialize = function(initNodes, numDimensions) {
+    nodes = initNodes;
+    nDim = numDimensions;
+    initialize();
   };
 
   force.strength = function(_) {
@@ -51,6 +57,10 @@ export default function(radius, x, y) {
 
   force.y = function(_) {
     return arguments.length ? (y = +_, force) : y;
+  };
+
+  force.z = function(_) {
+    return arguments.length ? (z = +_, force) : z;
   };
 
   return force;
