@@ -471,7 +471,7 @@ The *z*-accessor is invoked for each [node](#simulation_nodes) in the simulation
 
  <a name="forceRadial" href="#forceRadial">#</a> d3.<b>forceRadial</b>(<i>radius</i>[, <i>x</i>][, <i>y</i>][, <i>z</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/radial.js "Source")
 
-  [<img alt="Radial Force" src="https://raw.githubusercontent.com/vasturiano/d3-force-3d/master/img/radial.png" width="420" height="219">](https://bl.ocks.org/mbostock/cd98bf52e9067e26945edd95e8cf6ef9)
+  [<img alt="Radial Force" src="https://raw.githubusercontent.com/vasturiano/d3-force-3d/master/img/radial.png" width="420" height="219">](https://bl.ocks.org/mbostock/cd98bf52e9067e26945edd95e8cf6ef9)[<img alt="Radial Force 3D" src="https://raw.githubusercontent.com/vasturiano/d3-force-3d/master/img/radial3d.png" width="420">](https://bl.ocks.org/vasturiano/bcfc5baa9e7998fb97b3091d2499fe16)
 
   Creates a new positioning force towards a circle or sphere of the specified [*radius*](#radial_radius) centered at ⟨[*x*](#radial_x),[*y*](#radial_y),[*z*](#radial_z)⟩. If *x*, *y* and *z* are not specified, they default to ⟨0,0,0⟩.
 
