@@ -1,7 +1,19 @@
 import nodeResolve from 'rollup-plugin-node-resolve';
 
+const definition = require("./package.json");
+const dependencies = Object.keys(definition.dependencies);
+
 export default {
-	plugins: [
-		nodeResolve({ jsnext: true })
-	]
+  input: "index",
+  external: dependencies,
+  output: {
+    extend: true,
+    file: `build/${definition.name}.js`,
+    format: "umd",
+    globals: dependencies.reduce((p, v) => (p[v] = "d3", p), {}),
+    name: "d3"
+  },
+  plugins: [
+    nodeResolve({ jsnext: true })
+  ]
 };

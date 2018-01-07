@@ -37,18 +37,18 @@ export default function() {
   }
 
   function accumulate(treeNode) {
-    var strength = 0, q, c, x, y, z, i;
+    var strength = 0, q, c, weight = 0, x, y, z, i;
 
     // For internal nodes, accumulate forces from children.
     if (treeNode.length) {
       for (x = y = z = i = 0; i < 4; ++i) {
-        if ((q = treeNode[i]) && (c = q.value)) {
-          strength += c, x += c * (q.x || 0), y += c * (q.y || 0), z += c * (q.z || 0);
+        if ((q = treeNode[i]) && (c = Math.abs(q.value))) {
+          strength += q.value, weight += c, x += c * (q.x || 0), y += c * (q.y || 0), z += c * (q.z || 0);
         }
       }
-      treeNode.x = x / strength;
-      if (nDim > 1) { treeNode.y = y / strength; }
-      if (nDim > 2) { treeNode.z = z / strength; }
+      treeNode.x = x / weight;
+      if (nDim > 1) { treeNode.y = y / weight; }
+      if (nDim > 2) { treeNode.z = z / weight; }
     }
 
     // For leaf nodes, accumulate forces from coincident nodes.
