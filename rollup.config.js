@@ -1,19 +1,38 @@
+import {terser} from "rollup-plugin-terser";
+import * as meta from "./package.json";
 import nodeResolve from 'rollup-plugin-node-resolve';
 
-const definition = require("./package.json");
-const dependencies = Object.keys(definition.dependencies);
-
-export default {
-  input: "index",
-  external: dependencies,
+const config = {
+  input: "src/index.js",
+  external: Object.keys(meta.dependencies || {}).filter(key => /^d3-/.test(key)),
   output: {
-    extend: true,
-    file: `build/${definition.name}.js`,
+    file: `dist/${meta.name}.js`,
+    name: "d3",
     format: "umd",
-    globals: dependencies.reduce((p, v) => (p[v] = "d3", p), {}),
-    name: "d3"
+    indent: false,
+    extend: true,
+    banner: `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`,
+    globals: Object.assign({}, ...Object.keys(meta.dependencies || {}).filter(key => /^d3-/.test(key)).map(key => ({[key]: "d3"})))
   },
-  plugins: [
-    nodeResolve({ jsnext: true })
-  ]
+  plugins: []
 };
+
+export default [
+  config,
+  {
+    ...config,
+    output: {
+      ...config.output,
+      file: `dist/${meta.name}.min.js`
+    },
+    plugins: [
+      ...config.plugins,
+      nodeResolve({ jsnext: true }),
+      terser({
+        output: {
+          preamble: config.output.banner
+        }
+      })
+    ]
+  }
+];

@@ -19,17 +19,18 @@
     "name": "Vasco Asturiano",
     "url": "https://bl.ocks.org/vasturiano"
   },
-  "main": "build/d3-force-3d.js",
-  "module": "index",
-  "jsnext:main": "index",
+  "main": "dist/d3-force-3d.js",
+  "unpkg": "dist/d3-force-3d.min.js",
+  "jsdelivr": "dist/d3-force-3d.min.js",
+  "module": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/vasturiano/d3-force-3d.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup -c --banner \"$(preamble)\"",
-    "test": "tape 'test/**/*-test.js' && eslint index.js src",
-    "prepare": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" build/d3-force-3d.js -c -m -o build/d3-force-3d.min.js"
+    "pretest": "rollup -c",
+    "test": "tape 'test/**/*-test.js' && eslint src",
+    "prepublishOnly": "rm -rf dist && yarn test"
   },
   "dependencies": {
     "d3-binarytree": "~0.1",
@@ -40,11 +41,10 @@
     "d3-timer": "1"
   },
   "devDependencies": {
-    "eslint": "4",
-    "package-preamble": "0.1",
-    "rollup": "0.50",
+    "eslint": "5",
+    "rollup": "0.64",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "tape": "4",
-    "uglify-js": "3"
+    "rollup-plugin-terser": "1",
+    "tape": "4"
   }
 }
