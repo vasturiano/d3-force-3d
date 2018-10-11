@@ -26,7 +26,7 @@ To use this module, create a [simulation](#simulation) for an array of [nodes](#
 
 ## Installing
 
-If you use NPM, `npm install d3-force-3d`. Otherwise, download the [latest release](https://github.com/vasturiano/d3-force-3d/releases/latest). You can also load directly from the global [npmJS](https://npmjs.com) registry, as a bundled [standalone library](https://unpkg.com/d3-force-3d). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+If you use NPM, `npm install d3-force-3d`. You can also load directly from the global [npmJS](https://npmjs.com) registry, as a bundled [standalone library](https://unpkg.com/d3-force-3d). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
 
 ```html
 <script src="https://d3js.org/d3-collection.v1.min.js"></script>
