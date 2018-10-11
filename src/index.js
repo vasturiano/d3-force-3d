@@ -6,3 +6,4 @@ export {default as forceRadial} from "./radial";
 export {default as forceSimulation} from "./simulation";
 export {default as forceX} from "./x";
 export {default as forceY} from "./y";
+export {default as forceZ} from "./z";
