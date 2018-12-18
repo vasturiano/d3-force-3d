@@ -32,9 +32,12 @@
     "test": "tape 'test/**/*-test.js' && eslint src",
     "prepublishOnly": "rm -rf dist && yarn test"
   },
+  "files": [
+    "src/**/*.js",
+    "dist/**/*.js"
+  ],
   "dependencies": {
     "d3-binarytree": "~0.1",
-    "d3-collection": "1",
     "d3-dispatch": "1",
     "d3-octree": "~0.1",
     "d3-quadtree": "1",

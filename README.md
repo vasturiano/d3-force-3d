@@ -29,7 +29,6 @@ To use this module, create a [simulation](#simulation) for an array of [nodes](#
 If you use NPM, `npm install d3-force-3d`. You can also load directly from the global [npmJS](https://npmjs.com) registry, as a bundled [standalone library](https://unpkg.com/d3-force-3d). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
 
 ```html
-<script src="https://d3js.org/d3-collection.v1.min.js"></script>
 <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
 <script src="https://d3js.org/d3-timer.v1.min.js"></script>
 <script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
@@ -43,7 +42,7 @@ var simulation = d3.forceSimulation(nodes);
 </script>
 ```
 
-[Try d3-force-3d in your browser.](https://tonicdev.com/npm/d3-force-3d)
+[Try d3-force-3d in your browser.](https://bl.ocks.org/vasturiano/f59675656258d3f490e9faa40828c0e7)
 
 ## API Reference
 
@@ -63,13 +62,15 @@ Stops the simulation’s internal timer, if it is running, and returns the simul
 
 <a name="simulation_tick" href="#simulation_tick">#</a> <i>simulation</i>.<b>tick</b>() [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L48 "Source")
 
-Increments the current [*alpha*](#simulation_alpha) by ([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay); then invokes each registered [force](#simulation_force), passing the new *alpha*; then decrements each [node](#simulation_nodes)’s velocity by *velocity* × [*velocityDecay*](#simulation_velocityDecay); lastly increments each node’s position by *velocity*.
+Manually steps the simulation by the specified number of *iterations*, and returns the simulation. If *iterations* is not specified, it defaults to 1 (single step).
+
+For each iteration, it increments the current [*alpha*](#simulation_alpha) by ([*alphaTarget*](#simulation_alphaTarget) - *alpha*) × [*alphaDecay*](#simulation_alphaDecay); then invokes each registered [force](#simulation_force), passing the new *alpha*; then decrements each [node](#simulation_nodes)’s velocity by *velocity* × [*velocityDecay*](#simulation_velocityDecay); lastly increments each node’s position by *velocity*.
 
 This method does not dispatch [events](#simulation_on); events are only dispatched by the internal timer when the simulation is started automatically upon [creation](#forceSimulation) or by calling [*simulation*.restart](#simulation_restart). The natural number of ticks when the simulation is started is ⌈*log*([*alphaMin*](#simulation_alphaMin)) / *log*(1 - [*alphaDecay*](#simulation_alphaDecay))⌉; by default, this is 300.
 
 This method can be used in conjunction with [*simulation*.stop](#simulation_stop) to compute a [static force layout](https://bl.ocks.org/mbostock/1667139). For large graphs, static layouts should be computed [in a web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16) to avoid freezing the user interface.
 
-<a name="simulation_numDimensions" href="#simulation_numDimensions">#</a> <i>simulation</i>.<b>numDimensions</b>([<i>numDimensions</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L109 "Source")
+<a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L88 "Source")
 
 If *numDimensions* is specified, sets the simulation’s number of dimensions to use (1, 2 or 3), [re-initializes](#force_initialize) any bound [forces](#simulation_force) and returns the simulation. If *numSimulations* is not specified, returns the current simulation’s number of dimensions, which defaults to 2.
 

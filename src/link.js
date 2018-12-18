@@ -1,6 +1,5 @@
-import constant from "./constant";
-import jiggle from "./jiggle";
-import {map} from "d3-collection";
+import constant from "./constant.js";
+import jiggle from "./jiggle.js";
 
 function index(d) {
   return d.index;
@@ -58,7 +57,7 @@ export default function(links) {
     var i,
         n = nodes.length,
         m = links.length,
-        nodeById = map(nodes, id),
+        nodeById = new Map(nodes.map((d, i) => [id(d, i, nodes), d])),
         link;
 
     for (i = 0, count = new Array(n); i < m; ++i) {
