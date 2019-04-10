@@ -48,9 +48,9 @@ var simulation = d3.forceSimulation(nodes);
 
 ### Simulation
 
-<a name="forceSimulation" href="#forceSimulation">#</a> d3.<b>forceSimulation</b>([<i>nodes</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js "Source")
+<a name="forceSimulation" href="#forceSimulation">#</a> d3.<b>forceSimulation</b>([<i>nodes</i>], [<i>numDimensions</i>) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js "Source")
 
-Creates a new simulation with the specified array of [*nodes*](#simulation_nodes) and no [forces](#simulation_force). If *nodes* is not specified, it defaults to the empty array. The simulator [starts](#simulation_restart) automatically; use [*simulation*.on](#simulation_on) to listen for tick events as the simulation runs. If you wish to run the simulation manually instead, call [*simulation*.stop](#simulation_stop), and then call [*simulation*.tick](#simulation_tick) as desired.
+Creates a new simulation with the specified array of [*nodes*](#simulation_nodes), [number of dimensions](#simulation_numDimensions) and no [forces](#simulation_force). If *nodes* is not specified, it defaults to the empty array. If *numDimensions* is not specified, it defaults to `2`. The simulator [starts](#simulation_restart) automatically; use [*simulation*.on](#simulation_on) to listen for tick events as the simulation runs. If you wish to run the simulation manually instead, call [*simulation*.stop](#simulation_stop), and then call [*simulation*.tick](#simulation_tick) as desired.
 
 <a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L109 "Source")
 
