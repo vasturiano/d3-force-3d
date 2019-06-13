@@ -1,6 +1,9 @@
-# d3-force-3d
+d3-force-3d
+==============
 
-[![NPM](https://nodei.co/npm/d3-force-3d.png?compact=true)](https://nodei.co/npm/d3-force-3d/)
+[![NPM package][npm-img]][npm-url]
+[![Build Size][build-size-img]][build-size-url]
+[![Dependencies][dependencies-img]][dependencies-url]
 
 Extended version of [d3-force](https://github.com/d3/d3-force) to support other dimensions besides 2D, via the method [*numDimensions*](#simulation_numDimensions), supporting the values 1, 2 or 3 (default to 2). Fully backwards compatible with [d3-force](https://github.com/d3/d3-force) (version [2.0.0](https://github.com/d3/d3-force/tree/v2.0.0)), and should just work as a drop-in replacement d3 module.
 
@@ -513,3 +516,11 @@ If *radius* is specified, sets the circle *radius* to the specified number or fu
   <a name="radial_z" href="#radial_z">#</a> <i>radial</i>.<b>z</b>([<i>z</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/radial.js "Source")  
 
 If *z* is specified, sets the *z*-coordinate of the sphere center to the specified number and returns this force. If *z* is not specified, returns the current *z*-coordinate of the center, which defaults to zero. 
+
+
+[npm-img]: https://img.shields.io/npm/v/d3-force-3d.svg
+[npm-url]: https://npmjs.org/package/d3-force-3d
+[build-size-img]: https://img.shields.io/bundlephobia/minzip/d3-force-3d.svg
+[build-size-url]: https://bundlephobia.com/result?p=d3-force-3d
+[dependencies-img]: https://img.shields.io/david/vasturiano/d3-force-3d.svg
+[dependencies-url]: https://david-dm.org/vasturiano/d3-force-3d
