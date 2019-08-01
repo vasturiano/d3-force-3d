@@ -37,11 +37,11 @@ export default function() {
   }
 
   function accumulate(treeNode) {
-    var strength = 0, q, c, weight = 0, x, y, z, i;
+    var strength = 0, q, c, weight = 0, x, y, z, i, len;
 
     // For internal nodes, accumulate forces from children.
     if (treeNode.length) {
-      for (x = y = z = i = 0; i < 4; ++i) {
+      for (x = y = z = i = 0, len = treeNode.length; i < len; ++i) {
         if ((q = treeNode[i]) && (c = Math.abs(q.value))) {
           strength += q.value, weight += c, x += c * (q.x || 0), y += c * (q.y || 0), z += c * (q.z || 0);
         }
