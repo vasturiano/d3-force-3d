@@ -1,6 +1,9 @@
-# d3-force-3d
+d3-force-3d
+==============
 
-[![NPM](https://nodei.co/npm/d3-force-3d.png?compact=true)](https://nodei.co/npm/d3-force-3d/)
+[![NPM package][npm-img]][npm-url]
+[![Build Size][build-size-img]][build-size-url]
+[![Dependencies][dependencies-img]][dependencies-url]
 
 Extended version of [d3-force](https://github.com/d3/d3-force) to support other dimensions besides 2D, via the method [*numDimensions*](#simulation_numDimensions), supporting the values 1, 2 or 3 (default to 2). Fully backwards compatible with [d3-force](https://github.com/d3/d3-force) (version [2.0.0](https://github.com/d3/d3-force/tree/v2.0.0)), and should just work as a drop-in replacement d3 module.
 
@@ -48,15 +51,15 @@ var simulation = d3.forceSimulation(nodes);
 
 ### Simulation
 
-<a name="forceSimulation" href="#forceSimulation">#</a> d3.<b>forceSimulation</b>([<i>nodes</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js "Source")
+<a name="forceSimulation" href="#forceSimulation">#</a> d3.<b>forceSimulation</b>([<i>nodes</i>], [<i>numDimensions</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js "Source")
 
-Creates a new simulation with the specified array of [*nodes*](#simulation_nodes) and no [forces](#simulation_force). If *nodes* is not specified, it defaults to the empty array. The simulator [starts](#simulation_restart) automatically; use [*simulation*.on](#simulation_on) to listen for tick events as the simulation runs. If you wish to run the simulation manually instead, call [*simulation*.stop](#simulation_stop), and then call [*simulation*.tick](#simulation_tick) as desired.
+Creates a new simulation with the specified array of [*nodes*](#simulation_nodes), the number of [dimensions](#simulation_numDimensions) and no [forces](#simulation_force). If *nodes* is not specified, it defaults to the empty array. If *numDimensions* is not specified, it defaults to `2`. The simulator [starts](#simulation_restart) automatically; use [*simulation*.on](#simulation_on) to listen for tick events as the simulation runs. If you wish to run the simulation manually instead, call [*simulation*.stop](#simulation_stop), and then call [*simulation*.tick](#simulation_tick) as desired.
 
-<a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L101 "Source")
+<a name="simulation_restart" href="#simulation_restart">#</a> <i>simulation</i>.<b>restart</b>() [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L109 "Source")
 
 Restarts the simulation’s internal timer and returns the simulation. In conjunction with [*simulation*.alphaTarget](#simulation_alphaTarget) or [*simulation*.alpha](#simulation_alpha), this method can be used to “reheat” the simulation during interaction, such as when dragging a node, or to resume the simulation after temporarily pausing it with [*simulation*.stop](#simulation_stop).
 
-<a name="simulation_stop" href="#simulation_stop">#</a> <i>simulation</i>.<b>stop</b>() [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L105 "Source")
+<a name="simulation_stop" href="#simulation_stop">#</a> <i>simulation</i>.<b>stop</b>() [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L113 "Source")
 
 Stops the simulation’s internal timer, if it is running, and returns the simulation. If the timer is already stopped, this method does nothing. This method is useful for running the simulation manually; see [*simulation*.tick](#simulation_tick).
 
@@ -70,13 +73,13 @@ This method does not dispatch [events](#simulation_on); events are only dispatch
 
 This method can be used in conjunction with [*simulation*.stop](#simulation_stop) to compute a [static force layout](https://bl.ocks.org/mbostock/1667139). For large graphs, static layouts should be computed [in a web worker](https://bl.ocks.org/mbostock/01ab2e85e8727d6529d20391c0fd9a16) to avoid freezing the user interface.
 
-<a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/d3/d3-force/blob/master/src/simulation.js#L88 "Source")
+<a name="simulation_numDimensions" href="#simulation_numDimensions">#</a> <i>simulation</i>.<b>numDimensions</b>([<i>numDimensions</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L117 "Source")
 
 If *numDimensions* is specified, sets the simulation’s number of dimensions to use (1, 2 or 3), [re-initializes](#force_initialize) any bound [forces](#simulation_force) and returns the simulation. If *numSimulations* is not specified, returns the current simulation’s number of dimensions, which defaults to 2.
 
 A one-dimensional simulation will only consider and manipulate the `x` and `vx` coordinate attributes, while a two-dimensional will extend the domain to `y` and `vy`, and a three-dimensional to `z` and `vz`.
 
-<a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L115 "Source")
+<a name="simulation_nodes" href="#simulation_nodes">#</a> <i>simulation</i>.<b>nodes</b>([<i>nodes</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L123 "Source")
 
 If *nodes* is specified, sets the simulation’s nodes to the specified array of objects, initializing their positions and velocities if necessary, and then [re-initializes](#force_initialize) any bound [forces](#simulation_force); returns the simulation. If *nodes* is not specified, returns the simulation’s array of nodes as specified to the [constructor](#forceSimulation).
 
@@ -102,29 +105,29 @@ At the end of each [tick](#simulation_tick), after the application of any forces
 
 If the specified array of *nodes* is modified, such as when nodes are added to or removed from the simulation, this method must be called again with the new (or changed) array to notify the simulation and bound forces of the change; the simulation does not make a defensive copy of the specified array.
 
-<a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L119 "Source")
+<a name="simulation_alpha" href="#simulation_alpha">#</a> <i>simulation</i>.<b>alpha</b>([<i>alpha</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L127 "Source")
 
 If *alpha* is specified, sets the current alpha to the specified number in the range [0,1] and returns this simulation. If *alpha* is not specified, returns the current alpha value, which defaults to 1.
 
-<a name="simulation_alphaMin" href="#simulation_alphaMin">#</a> <i>simulation</i>.<b>alphaMin</b>([<i>min</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L123 "Source")
+<a name="simulation_alphaMin" href="#simulation_alphaMin">#</a> <i>simulation</i>.<b>alphaMin</b>([<i>min</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L131 "Source")
 
 If *min* is specified, sets the minimum *alpha* to the specified number in the range [0,1] and returns this simulation. If *min* is not specified, returns the current minimum *alpha* value, which defaults to 0.001. The simulation’s internal timer stops when the current [*alpha*](#simulation_alpha) is less than the minimum *alpha*. The default [alpha decay rate](#simulation_alphaDecay) of ~0.0228 corresponds to 300 iterations.
 
-<a name="simulation_alphaDecay" href="#simulation_alphaDecay">#</a> <i>simulation</i>.<b>alphaDecay</b>([<i>decay</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L127 "Source")
+<a name="simulation_alphaDecay" href="#simulation_alphaDecay">#</a> <i>simulation</i>.<b>alphaDecay</b>([<i>decay</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L135 "Source")
 
 If *decay* is specified, sets the [*alpha*](#simulation_alpha) decay rate to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current *alpha* decay rate, which defaults to 0.0228… = 1 - *pow*(0.001, 1 / 300) where 0.001 is the default [minimum *alpha*](#simulation_alphaMin).
 
 The alpha decay rate determines how quickly the current alpha interpolates towards the desired [target *alpha*](#simulation_alphaTarget); since the default target *alpha* is zero, by default this controls how quickly the simulation cools. Higher decay rates cause the simulation to stabilize more quickly, but risk getting stuck in a local minimum; lower values cause the simulation to take longer to run, but typically converge on a better layout. To have the simulation run forever at the current *alpha*, set the *decay* rate to zero; alternatively, set a [target *alpha*](#simulation_alphaTarget) greater than the [minimum *alpha*](#simulation_alphaMin).
 
-<a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L131 "Source")
+<a name="simulation_alphaTarget" href="#simulation_alphaTarget">#</a> <i>simulation</i>.<b>alphaTarget</b>([<i>target</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L139 "Source")
 
 If *target* is specified, sets the current target [*alpha*](#simulation_alpha) to the specified number in the range [0,1] and returns this simulation. If *target* is not specified, returns the current target alpha value, which defaults to 0.
 
-<a name="simulation_velocityDecay" href="#simulation_velocityDecay">#</a> <i>simulation</i>.<b>velocityDecay</b>([<i>decay</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L135 "Source")
+<a name="simulation_velocityDecay" href="#simulation_velocityDecay">#</a> <i>simulation</i>.<b>velocityDecay</b>([<i>decay</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L143 "Source")
 
 If *decay* is specified, sets the velocity decay factor to the specified number in the range [0,1] and returns this simulation. If *decay* is not specified, returns the current velocity decay factor, which defaults to 0.4. The decay factor is akin to atmospheric friction; after the application of any forces during a [tick](#simulation_tick), each node’s velocity is multiplied by 1 - *decay*. As with lowering the [alpha decay rate](#simulation_alphaDecay), less velocity decay may converge on a better solution, but risks numerical instabilities and oscillation.
 
-<a name="simulation_force" href="#simulation_force">#</a> <i>simulation</i>.<b>force</b>(<i>name</i>[, <i>force</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L139 "Source")
+<a name="simulation_force" href="#simulation_force">#</a> <i>simulation</i>.<b>force</b>(<i>name</i>[, <i>force</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L147 "Source")
 
 If *force* is specified, assigns the [force](#forces) for the specified *name* and returns this simulation. If *force* is not specified, returns the force with the specified name, or undefined if there is no such force. (By default, new simulations have no forces.) For example, to create a new simulation to layout a graph, you might say:
 
@@ -141,11 +144,11 @@ To remove the force with the given *name*, pass null as the *force*. For example
 simulation.force("charge", null);
 ```
 
-<a name="simulation_find" href="#simulation_find">#</a> <i>simulation</i>.<b>find</b>(<i>x</i>[, <i>y</i>[, <i>z</i>]][, <i>radius</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L143 "Source")
+<a name="simulation_find" href="#simulation_find">#</a> <i>simulation</i>.<b>find</b>(<i>x</i>[, <i>y</i>[, <i>z</i>]][, <i>radius</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L151 "Source")
 
 Returns the node closest to the position ⟨*x*,*y*,*z*⟩ with the given search *radius*. If *radius* is not specified, it defaults to infinity. If there is no node within the search area, returns undefined.
 
-<a name="simulation_on" href="#simulation_on">#</a> <i>simulation</i>.<b>on</b>(<i>typenames</i>, [<i>listener</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L173 "Source")
+<a name="simulation_on" href="#simulation_on">#</a> <i>simulation</i>.<b>on</b>(<i>typenames</i>, [<i>listener</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js#L181 "Source")
 
 If *listener* is specified, sets the event *listener* for the specified *typenames* and returns this simulation. If an event listener was already registered for the same type and name, the existing listener is removed before the new listener is added. If *listener* is null, removes the current event listeners for the specified *typenames*, if any. If *listener* is not specified, returns the first currently-assigned listener matching the specified *typenames*, if any. When a specified event is dispatched, each *listener* will be invoked with the `this` context as the simulation.
 
@@ -513,3 +516,11 @@ If *radius* is specified, sets the circle *radius* to the specified number or fu
   <a name="radial_z" href="#radial_z">#</a> <i>radial</i>.<b>z</b>([<i>z</i>]) [<>](https://github.com/vasturiano/d3-force-3d/blob/master/src/radial.js "Source")  
 
 If *z* is specified, sets the *z*-coordinate of the sphere center to the specified number and returns this force. If *z* is not specified, returns the current *z*-coordinate of the center, which defaults to zero. 
+
+
+[npm-img]: https://img.shields.io/npm/v/d3-force-3d.svg
+[npm-url]: https://npmjs.org/package/d3-force-3d
+[build-size-img]: https://img.shields.io/bundlephobia/minzip/d3-force-3d.svg
+[build-size-url]: https://bundlephobia.com/result?p=d3-force-3d
+[dependencies-img]: https://img.shields.io/david/vasturiano/d3-force-3d.svg
+[dependencies-url]: https://david-dm.org/vasturiano/d3-force-3d
