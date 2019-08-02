@@ -7,7 +7,7 @@ function index(d) {
 
 function find(nodeById, nodeId) {
   var node = nodeById.get(nodeId);
-  if (!node) throw new Error("missing: " + nodeId);
+  if (!node) throw new Error("node not found: " + nodeId);
   return node;
 }
 

@@ -77,9 +77,9 @@ export default function(nodes, numDimensions) {
   function initializeNodes() {
     for (var i = 0, n = nodes.length, node; i < n; ++i) {
       node = nodes[i], node.index = i;
-      if (!isNaN(node.fx)) node.x = node.fx;
-      if (!isNaN(node.fy)) node.y = node.fy;
-      if (!isNaN(node.fz)) node.z = node.fz;
+      if (node.fx != null) node.x = node.fx;
+      if (node.fy != null) node.y = node.fy;
+      if (node.fz != null) node.z = node.fz;
       if (isNaN(node.x) || (nDim > 1 && isNaN(node.y)) || (nDim > 2 && isNaN(node.z))) {
         var radius = initialRadius * (nDim > 2 ? Math.cbrt(i) : (nDim > 1 ? Math.sqrt(i) : i)),
           rollAngle = i * initialAngleRoll,
