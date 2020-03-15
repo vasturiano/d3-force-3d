@@ -30,24 +30,24 @@
   "scripts": {
     "pretest": "rollup -c",
     "test": "tape 'test/**/*-test.js' && eslint src",
-    "prepublishOnly": "rm -rf dist && yarn test"
+    "prepare": "rm -rf dist && yarn test"
   },
   "files": [
     "src/**/*.js",
     "dist/**/*.js"
   ],
   "dependencies": {
-    "d3-binarytree": "~0.1",
-    "d3-dispatch": "1",
-    "d3-octree": "~0.1",
-    "d3-quadtree": "1",
-    "d3-timer": "1"
+    "d3-binarytree": "^0.1.8",
+    "d3-dispatch": "^1.0.6",
+    "d3-octree": "^0.1.8",
+    "d3-quadtree": "^1.0.7",
+    "d3-timer": "^1.0.10"
   },
   "devDependencies": {
-    "eslint": "5",
-    "rollup": "0.64",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-terser": "1",
-    "tape": "4"
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "eslint": "^6.8.0",
+    "rollup": "^2.0.6",
+    "rollup-plugin-terser": "^5.3.0",
+    "tape": "^4.13.2"
   }
 }
