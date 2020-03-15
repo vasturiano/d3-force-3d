@@ -16,8 +16,8 @@ export function z(d) {
 }
 
 var initialRadius = 10,
-    initialAngleRoll = Math.PI * (3 - Math.sqrt(5)), // Golden angle
-    initialAngleYaw = Math.PI / 24; // Sequential
+    initialAngleRoll = Math.PI * (3 - Math.sqrt(5)), // Golden ratio angle
+    initialAngleYaw = Math.PI * 20 / (9 + Math.sqrt(221)); // Markov irrational number
 
 export default function(nodes, numDimensions) {
   numDimensions = numDimensions || 2;
@@ -84,9 +84,17 @@ export default function(nodes, numDimensions) {
         var radius = initialRadius * (nDim > 2 ? Math.cbrt(i) : (nDim > 1 ? Math.sqrt(i) : i)),
           rollAngle = i * initialAngleRoll,
           yawAngle = i * initialAngleYaw;
-        node.x = radius * (nDim > 1 ? Math.cos(rollAngle) : 1);
-        if (nDim > 1) { node.y = radius * Math.sin(rollAngle); }
-        if (nDim > 2) { node.z = radius * Math.sin(yawAngle); }
+
+        if (nDim === 1) {
+          node.x = radius;
+        } else if (nDim === 2) {
+          node.x = radius * Math.cos(rollAngle);
+          node.y = radius * Math.sin(rollAngle);
+        } else { // 3 dimensions: use spherical distribution along 2 irrational number angles
+          node.x = radius * Math.sin(rollAngle) * Math.cos(yawAngle);
+          node.y = radius * Math.cos(rollAngle);
+          node.z = radius * Math.sin(rollAngle) * Math.sin(yawAngle);
+        }
       }
       if (isNaN(node.vx) || (nDim > 1 && isNaN(node.vy)) || (nDim > 2 && isNaN(node.vz))) {
         node.vx = 0;
