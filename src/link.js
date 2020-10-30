@@ -34,7 +34,7 @@ export default function(links) {
     for (var k = 0, n = links.length; k < iterations; ++k) {
       for (var i = 0, link, source, target, x = 0, y = 0, z = 0, l, b; i < n; ++i) {
         link = links[i], source = link.source, target = link.target;
-        x = target.x + target.vx - source.x - source.vx || jiggle();
+        x = target.x + target.vx - source.x - source.vx || jiggle(random);
         if (nDim > 1) { y = target.y + target.vy - source.y - source.vy || jiggle(random); }
         if (nDim > 2) { z = target.z + target.vz - source.z - source.vz || jiggle(random); }
         l = Math.sqrt(x * x + y * y + z * z);
