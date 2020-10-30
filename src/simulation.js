@@ -1,5 +1,6 @@
 import {dispatch} from "d3-dispatch";
 import {timer} from "d3-timer";
+import lcg from "./lcg.js";
 
 var MAX_DIMENSIONS = 3;
 
@@ -31,7 +32,8 @@ export default function(nodes, numDimensions) {
       velocityDecay = 0.6,
       forces = new Map(),
       stepper = timer(step),
-      event = dispatch("tick", "end");
+      event = dispatch("tick", "end"),
+      random = lcg();
 
   if (nodes == null) nodes = [];
 
@@ -81,7 +83,7 @@ export default function(nodes, numDimensions) {
       if (node.fy != null) node.y = node.fy;
       if (node.fz != null) node.z = node.fz;
       if (isNaN(node.x) || (nDim > 1 && isNaN(node.y)) || (nDim > 2 && isNaN(node.z))) {
-        var radius = initialRadius * (nDim > 2 ? Math.cbrt(i) : (nDim > 1 ? Math.sqrt(i) : i)),
+        var radius = initialRadius * (nDim > 2 ? Math.cbrt(0.5 + i) : (nDim > 1 ? Math.sqrt(0.5 + i) : i)),
           rollAngle = i * initialAngleRoll,
           yawAngle = i * initialAngleYaw;
 
@@ -105,7 +107,7 @@ export default function(nodes, numDimensions) {
   }
 
   function initializeForce(force) {
-    if (force.initialize) force.initialize(nodes, nDim);
+    if (force.initialize) force.initialize(nodes, nDim, random);
     return force;
   }
 
@@ -150,6 +152,10 @@ export default function(nodes, numDimensions) {
 
     velocityDecay: function(_) {
       return arguments.length ? (velocityDecay = 1 - _, simulation) : 1 - velocityDecay;
+    },
+
+    randomSource: function(_) {
+      return arguments.length ? (random = _, forces.forEach(initializeForce), simulation) : random;
     },
 
     force: function(name, _) {

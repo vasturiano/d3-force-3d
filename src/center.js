@@ -1,5 +1,5 @@
 export default function(x, y, z) {
-  var nodes;
+  var nodes, strength = 1;
 
   if (x == null) x = 0;
   if (y == null) y = 0;
@@ -17,7 +17,7 @@ export default function(x, y, z) {
       node = nodes[i], sx += node.x || 0, sy += node.y || 0, sz += node.z || 0;
     }
 
-    for (sx = sx / n - x, sy = sy / n - y, sz = sz / n - z, i = 0; i < n; ++i) {
+    for (sx = (sx / n - x) * strength, sy = (sy / n - y) * strength, sz = (sz / n - z) * strength, i = 0; i < n; ++i) {
       node = nodes[i];
       if (sx) { node.x -= sx }
       if (sy) { node.y -= sy; }
@@ -39,6 +39,10 @@ export default function(x, y, z) {
 
   force.z = function(_) {
     return arguments.length ? (z = +_, force) : z;
+  };
+
+  force.strength = function(_) {
+    return arguments.length ? (strength = +_, force) : strength;
   };
 
   return force;

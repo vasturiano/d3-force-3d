@@ -20,6 +20,7 @@ export default function(radius) {
   var nodes,
       nDim,
       radii,
+      random,
       strength = 1,
       iterations = 1;
 
@@ -70,9 +71,9 @@ export default function(radius) {
               z = (nDim > 2 ? zi - data.z - data.vz : 0),
               l = x * x + y * y + z * z;
           if (l < r * r) {
-            if (x === 0) x = jiggle(), l += x * x;
-            if (nDim > 1 && y === 0) y = jiggle(), l += y * y;
-            if (nDim > 2 && z === 0) z = jiggle(), l += z * z;
+            if (x === 0) x = jiggle(random), l += x * x;
+            if (nDim > 1 && y === 0) y = jiggle(random), l += y * y;
+            if (nDim > 2 && z === 0) z = jiggle(random), l += z * z;
             l = (r - (l = Math.sqrt(l))) / l * strength;
 
             node.vx += (x *= l) * (r = (rj *= rj) / (ri2 + rj));
@@ -108,9 +109,10 @@ export default function(radius) {
     for (i = 0; i < n; ++i) node = nodes[i], radii[node.index] = +radius(node, i, nodes);
   }
 
-  force.initialize = function(initNodes, numDimensions) {
-    nodes = initNodes;
-    nDim = numDimensions;
+  force.initialize = function(_nodes, _numDimensions, _random) {
+    nodes = _nodes;
+    nDim = _numDimensions;
+    random = _random;
     initialize();
   };
 

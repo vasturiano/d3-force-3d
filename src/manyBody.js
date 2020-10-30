@@ -9,6 +9,7 @@ export default function() {
   var nodes,
       nDim,
       node,
+      random,
       alpha,
       strength = constant(-30),
       strengths,
@@ -81,9 +82,9 @@ export default function() {
     // Limit forces for very close nodes; randomize direction if coincident.
     if (w * w / theta2 < l) {
       if (l < distanceMax2) {
-        if (x === 0) x = jiggle(), l += x * x;
-        if (nDim > 1 && y === 0) y = jiggle(), l += y * y;
-        if (nDim > 2 && z === 0) z = jiggle(), l += z * z;
+        if (x === 0) x = jiggle(random), l += x * x;
+        if (nDim > 1 && y === 0) y = jiggle(random), l += y * y;
+        if (nDim > 2 && z === 0) z = jiggle(random), l += z * z;
         if (l < distanceMin2) l = Math.sqrt(distanceMin2 * l);
         node.vx += x * treeNode.value * alpha / l;
         if (nDim > 1) { node.vy += y * treeNode.value * alpha / l; }
@@ -97,9 +98,9 @@ export default function() {
 
     // Limit forces for very close nodes; randomize direction if coincident.
     if (treeNode.data !== node || treeNode.next) {
-      if (x === 0) x = jiggle(), l += x * x;
-      if (nDim > 1 && y === 0) y = jiggle(), l += y * y;
-      if (nDim > 2 && z === 0) z = jiggle(), l += z * z;
+      if (x === 0) x = jiggle(random), l += x * x;
+      if (nDim > 1 && y === 0) y = jiggle(random), l += y * y;
+      if (nDim > 2 && z === 0) z = jiggle(random), l += z * z;
       if (l < distanceMin2) l = Math.sqrt(distanceMin2 * l);
     }
 
@@ -111,9 +112,10 @@ export default function() {
     } while (treeNode = treeNode.next);
   }
 
-  force.initialize = function(initNodes, numDimensions) {
-    nodes = initNodes;
-    nDim = numDimensions;
+  force.initialize = function(_nodes, _numDimensions, _random) {
+    nodes = _nodes;
+    nDim = _numDimensions;
+    random = _random;
     initialize();
   };
 

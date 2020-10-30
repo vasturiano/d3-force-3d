@@ -21,6 +21,7 @@ export default function(links) {
       nDim,
       count,
       bias,
+      random,
       iterations = 1;
 
   if (links == null) links = [];
@@ -34,8 +35,8 @@ export default function(links) {
       for (var i = 0, link, source, target, x = 0, y = 0, z = 0, l, b; i < n; ++i) {
         link = links[i], source = link.source, target = link.target;
         x = target.x + target.vx - source.x - source.vx || jiggle();
-        if (nDim > 1) { y = target.y + target.vy - source.y - source.vy || jiggle(); }
-        if (nDim > 2) { z = target.z + target.vz - source.z - source.vz || jiggle(); }
+        if (nDim > 1) { y = target.y + target.vy - source.y - source.vy || jiggle(random); }
+        if (nDim > 2) { z = target.z + target.vz - source.z - source.vz || jiggle(random); }
         l = Math.sqrt(x * x + y * y + z * z);
         l = (l - distances[i]) / l * alpha * strengths[i];
         x *= l, y *= l, z *= l;
@@ -92,9 +93,10 @@ export default function(links) {
     }
   }
 
-  force.initialize = function(initNodes, numDimensions) {
-    nodes = initNodes;
-    nDim = numDimensions;
+  force.initialize = function(_nodes, _numDimensions, _random) {
+    nodes = _nodes;
+    nDim = _numDimensions;
+    random = _random;
     initialize();
   };
 

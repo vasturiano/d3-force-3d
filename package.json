@@ -43,6 +43,7 @@
     "d3-quadtree": "^1.0.7",
     "d3-timer": "^1.0.10"
   },
+  "sideEffects": false,
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^7.1.1",
     "eslint": "^6.8.0",
