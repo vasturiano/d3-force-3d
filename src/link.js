@@ -93,10 +93,10 @@ export default function(links) {
     }
   }
 
-  force.initialize = function(_nodes, _numDimensions, _random) {
+  force.initialize = function(_nodes, ...args) {
     nodes = _nodes;
-    nDim = _numDimensions;
-    random = _random;
+    random = args.find(arg => typeof arg === 'function') || undefined;
+    nDim = args.find(arg => [1, 2, 3].includes(arg)) || 2;
     initialize();
   };
 

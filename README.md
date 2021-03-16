@@ -197,9 +197,9 @@ Forces may optionally implement [*force*.initialize](#force_initialize) to recei
 
 Applies this force, optionally observing the specified *alpha*. Typically, the force is applied to the array of nodes previously passed to [*force*.initialize](#force_initialize), however, some forces may apply to a subset of nodes, or behave differently. For example, [d3.forceLink](#links) applies to the source and target of each link.
 
-<a name="force_initialize" href="#force_initialize">#</a> <i>force</i>.<b>initialize</b>(<i>nodes</i>, <i>numDimensions</i>, <i>random</i>) · [Source](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js)
+<a name="force_initialize" href="#force_initialize">#</a> <i>force</i>.<b>initialize</b>(<i>nodes</i>, <i>random</i>, <i>numDimensions</i>) · [Source](https://github.com/vasturiano/d3-force-3d/blob/master/src/simulation.js)
 
-Supplies the array of *nodes*, *numDimensions* and *random* source to this force. This method is called when a force is bound to a simulation via [*simulation*.force](#simulation_force) and when the simulation’s nodes change via [*simulation*.nodes](#simulation_nodes). A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
+Supplies the array of *nodes*, *random* source and *numDimensions* to this force. This method is called when a force is bound to a simulation via [*simulation*.force](#simulation_force) and when the simulation’s nodes change via [*simulation*.nodes](#simulation_nodes). A force may perform necessary work during initialization, such as evaluating per-node parameters, to avoid repeatedly performing work during each application of the force.
 
 #### Centering
 

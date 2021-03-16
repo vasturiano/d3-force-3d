@@ -37,9 +37,9 @@ export default function(radius, x, y, z) {
     }
   }
 
-  force.initialize = function(initNodes, numDimensions) {
+  force.initialize = function(initNodes, ...args) {
     nodes = initNodes;
-    nDim = numDimensions;
+    nDim = args.find(arg => [1, 2, 3].includes(arg)) || 2;
     initialize();
   };
 

@@ -109,10 +109,10 @@ export default function(radius) {
     for (i = 0; i < n; ++i) node = nodes[i], radii[node.index] = +radius(node, i, nodes);
   }
 
-  force.initialize = function(_nodes, _numDimensions, _random) {
+  force.initialize = function(_nodes, ...args) {
     nodes = _nodes;
-    nDim = _numDimensions;
-    random = _random;
+    random = args.find(arg => typeof arg === 'function') || undefined;
+    nDim = args.find(arg => [1, 2, 3].includes(arg)) || 2;
     initialize();
   };
 

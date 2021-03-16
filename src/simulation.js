@@ -107,7 +107,7 @@ export default function(nodes, numDimensions) {
   }
 
   function initializeForce(force) {
-    if (force.initialize) force.initialize(nodes, nDim, random);
+    if (force.initialize) force.initialize(nodes, random, nDim);
     return force;
   }
 
