@@ -111,7 +111,7 @@ export default function(radius) {
 
   force.initialize = function(_nodes, ...args) {
     nodes = _nodes;
-    random = args.find(arg => typeof arg === 'function') || undefined;
+    random = args.find(arg => typeof arg === 'function') || Math.random;
     nDim = args.find(arg => [1, 2, 3].includes(arg)) || 2;
     initialize();
   };
