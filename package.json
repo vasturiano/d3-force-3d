@@ -39,16 +39,16 @@
   "sideEffects": false,
   "dependencies": {
     "d3-binarytree": "^0.2.0",
-    "d3-dispatch": "^2.0.0",
+    "d3-dispatch": "^3.0.1",
     "d3-octree": "^0.2.0",
-    "d3-quadtree": "^2.0.0",
-    "d3-timer": "^2.0.0"
+    "d3-quadtree": "^3.0.1",
+    "d3-timer": "^3.0.1"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^11.2.0",
-    "eslint": "^7.22.0",
-    "mocha": "^8.4.0",
-    "rollup": "^2.41.4",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "eslint": "^7.28.0",
+    "mocha": "^9.0.0",
+    "rollup": "^2.51.1",
     "rollup-plugin-terser": "^7.0.2",
     "tape": "^5.2.2"
   },
