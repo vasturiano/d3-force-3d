@@ -5,7 +5,7 @@ d3-force-3d
 [![Build Size][build-size-img]][build-size-url]
 [![Dependencies][dependencies-img]][dependencies-url]
 
-Extended version of [d3-force](https://github.com/d3/d3-force) to support other dimensions besides 2D, via the method [*numDimensions*](#simulation_numDimensions), supporting the values 1, 2 or 3 (default to 2). Fully backwards compatible with [d3-force](https://github.com/d3/d3-force) (version [2.1.1](https://github.com/d3/d3-force/tree/v2.1.1)), and should just work as a drop-in replacement d3 module.
+Extended version of [d3-force](https://github.com/d3/d3-force) to support other dimensions besides 2D, via the method [*numDimensions*](#simulation_numDimensions), supporting the values 1, 2 or 3 (default to 2). Fully backwards compatible with [d3-force](https://github.com/d3/d3-force) (version [3.0.0](https://github.com/d3/d3-force/tree/v3.0.0)), and should just work as a drop-in replacement d3 module.
 
 This module implements a [velocity Verlet](https://en.wikipedia.org/wiki/Verlet_integration) numerical integrator for simulating physical forces on particles. The simulation is simplified: it assumes a constant unit time step Δ*t* = 1 for each step, and a constant unit mass *m* = 1 for all particles. As a result, a force *F* acting on a particle is equivalent to a constant acceleration *a* over the time interval Δ*t*, and can be simulated simply by adding to the particle’s velocity, which is then added to the particle’s position.
 
