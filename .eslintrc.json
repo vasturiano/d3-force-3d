@@ -11,6 +11,7 @@
   },
   "rules": {
     "no-cond-assign": 0,
-    "no-unused-vars": ["warn", { "varsIgnorePattern": "VARIABLE_NAME"}]
+    // "no-unused-vars": ["warn", { "varsIgnorePattern": "VARIABLE_NAME"}]
+    "no-unused-vars": "off"
   }
 }

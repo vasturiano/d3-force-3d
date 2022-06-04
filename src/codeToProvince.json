@@ -1,0 +1,116 @@
+{
+  "mapping": [
+    {
+      "prov_aid": 1101,
+      "prov": "北京"
+    },
+    {
+      "prov_aid": 1102,
+      "prov": "乌鲁木齐"
+    },
+    {
+      "prov_aid": 1103,
+      "prov": "重庆"
+    },
+    {
+      "prov_aid": 1104,
+      "prov": "广州"
+    },
+    {
+      "prov_aid": 1105,
+      "prov": "天津"
+    },
+    {
+      "prov_aid": 1106,
+      "prov": "杭州"
+    },
+    {
+      "prov_aid": 1107,
+      "prov": "南宁"
+    },
+    {
+      "prov_aid": 1108,
+      "prov": "呼和浩特"
+    },
+    {
+      "prov_aid": 1109,
+      "prov": "银川"
+    },
+    {
+      "prov_aid": 11010,
+      "prov": "南昌"
+    },
+    {
+      "prov_aid": 11011,
+      "prov": "合肥"
+    },
+    {
+      "prov_aid": 11012,
+      "prov": "贵阳"
+    },
+    {
+      "prov_aid": 11013,
+      "prov": "西安"
+    },
+    {
+      "prov_aid": 11014,
+      "prov": "沈阳"
+    },
+    {
+      "prov_aid": 11015,
+      "prov": "太原"
+    },
+    {
+      "prov_aid": 11017,
+      "prov": "成都"
+    },
+    {
+      "prov_aid": 11018,
+      "prov": "南京"
+    },
+    {
+      "prov_aid": 11019,
+      "prov": "石家庄"
+    },
+    {
+      "prov_aid": 11020,
+      "prov": "福州"
+    },
+    {
+      "prov_aid": 11021,
+      "prov": "长春"
+    },
+    {
+      "prov_aid": 11023,
+      "prov": "昆明"
+    },
+    {
+      "prov_aid": 11024,
+      "prov": "武汉"
+    },
+    {
+      "prov_aid": 11025,
+      "prov": "海口"
+    },
+    {
+      "prov_aid": 11027,
+      "prov": "兰州"
+    },
+    {
+      "prov_aid": 11028,
+      "prov": "长沙"
+    },
+    {
+      "prov_aid": 11029,
+      "prov": "济南"
+    },
+    {
+      "prov_aid": 11030,
+      "prov": "郑州"
+    },
+    {
+      "prov_aid": 11034,
+      "prov": "拉萨"
+    }
+  ]
+}

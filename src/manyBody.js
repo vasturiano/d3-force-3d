@@ -24,9 +24,27 @@ import {octree} from "d3-octree";
 import constant from "./constant.js";
 import jiggle from "./jiggle.js";
 import {x, y, z} from "./simulation.js";
-
+import distancefile from "./allCapital.json"
+import codeToProvince from "./codeToProvince.json"
 export default function() {
-  console.log("manybody############");
+  //获得省会之间距离,将之放入capDistance字典里
+  var distance = distancefile.distances
+  // var capDistance = distance.map(function(d,i) {
+  //   return ({[d.city1+"-"+d.city2]:d.distance})
+  // })
+  var sumDistance = 0,averageAllDistance = 0,countProv = 0;
+  var capDistance = new Map();
+  distance.forEach(function(d) {
+    capDistance.set(d.city1+"-"+d.city2,d.distance)
+    sumDistance += +(d.distance)
+    countProv++
+  })
+  averageAllDistance = sumDistance/countProv
+  //获得各省代码与省会之间转换关系
+  var codeToCap = codeToProvince.mapping
+  var hashcodeToCap = new Map() 
+  codeToCap.forEach(d=>hashcodeToCap.set(d.prov_aid,d.prov))
+  console.log("manybody&&&&&&&&&&&");
   var nodes,
       nDim,
       node,
@@ -38,21 +56,97 @@ export default function() {
       strengths,
       distanceMin2 = 1,
       distanceMax2 = Infinity,
+      weight = new Map(),
       theta2 = 0.81; //theta用于判断距离远近而采取不同的方法对粒子的速度进行处理
-
+      // theta2 = 0; //theta用于判断距离远近而采取不同的方法对粒子的速度进行处理
+      weight.set(16,2)
+      weight.set(17,3)
   function force(_) {
-    var i,
-        n = nodes.length,
-        tree =
+    // console.log("aaa"); //调用200次
+    var i,j,
+        n = nodes.length;
+    var currentSumDistance = 0;
+    var tree =
             (nDim === 1 ? binarytree(nodes, x)
-            :(nDim === 2 ? quadtree(nodes, x, y)
+            :(nDim === 2 ? quadtree(nodes, x, y) //执行这个函数时已经构造完成了
             :(nDim === 3 ? octree(nodes, x, y, z)
             :null
         ))).visitAfter(accumulate);
-
-    for (alpha = _, i = 0; i < n; ++i) node = nodes[i], tree.visit(apply);
+    var averageDistance = getCurrentAverageDistance(n)
+    // for (alpha = _, i = 0; i < n; ++i) node = nodes[i], tree.visit(apply);
+    for (alpha = _, i = 0; i < n; ++i) node = nodes[i], distanceForce(node,n,averageDistance);
+    // console.log(averageDistance);
+    // console.log(averageAllDistance);
   }
+ 
 
+  function getCurrentAverageDistance(n) {
+    var provinceSet = new Set()
+    var currentSumDistance = 0,currentValidCount = 0;
+    for (var i=0;i<n;i++) {
+      var node = nodes[i]
+      for (var j=0;j<n;j++) {
+        var treeNode = nodes[j]
+        if (node.prov_aid != treeNode.prov_aid) {
+          if ((hashcodeToCap.get(node.prov_aid) != undefined) && hashcodeToCap.get(treeNode.prov_aid) != undefined) {
+            var keyOfcap = hashcodeToCap.get(node.prov_aid)+"-"+hashcodeToCap.get(treeNode.prov_aid)
+            if (!provinceSet.has(keyOfcap)) {
+              provinceSet.add(keyOfcap)
+              var valueOfcapDistance = capDistance.get(keyOfcap)
+              if (valueOfcapDistance>0) {
+                currentSumDistance += +(valueOfcapDistance)
+                currentValidCount++
+              }
+            }
+          }
+        }
+      }
+    }
+    var averageDistance = Math.floor(currentSumDistance/currentValidCount)
+    return averageDistance
+  }
+  function distanceForce(node,n,averageDistance) {
+    for (var j=0;j<n;j++) {
+      var treeNode = nodes[j]
+      // console.log("aaaa");
+      if (treeNode !== node) {
+      var x = treeNode.x - node.x, 
+          y = (nDim > 1 ? treeNode.y - node.y : 0),
+          z = (nDim > 2 ? treeNode.z - node.z : 0),
+          l = x * x + y * y + z * z;
+          var w = strengths[treeNode.index] * alpha / l;
+          // console.log(node,treeNode);
+          if (node.prov_aid != treeNode.prov_aid) {
+            if ((hashcodeToCap.get(node.prov_aid) != undefined) && hashcodeToCap.get(treeNode.prov_aid) != undefined) {
+              var keycap = hashcodeToCap.get(node.prov_aid)+"-"+hashcodeToCap.get(treeNode.prov_aid)
+              var keycapDistance = capDistance.get(keycap)
+              // if (+(keycapDistance) > averageDistance) {
+                // console.log("pow:",Math.pow(keycapDistance/averageDistance,2));
+                // node.vx += x * w * Math.pow(keycapDistance/averageDistance,2);
+                w = w/10
+                node.vx += x * w ;
+                // console.log("node.vx",node.vx);
+                if (nDim > 1) { node.vy += y * w; }
+                if (nDim > 2) { node.vz += z * w; }
+              // }
+            } else {
+              w = w/20
+              node.vx += x * w;
+              if (nDim > 1) { node.vy += y * w; }
+              if (nDim > 2) { node.vz += z * w; }
+            }
+          } else {
+            // w = -w
+            // w = 0
+            w = w/20
+            node.vx += x * w;
+            if (nDim > 1) { node.vy += y * w; }
+            if (nDim > 2) { node.vz += z * w; }
+          }
+      }
+    }
+    // console.log(node.vx);
+  }
   /**
    * 
    * @returns 初始化各个节点的strength
@@ -61,7 +155,10 @@ export default function() {
     if (!nodes) return;
     var i, n = nodes.length, node;
     strengths = new Array(n);
-    for (i = 0; i < n; ++i) node = nodes[i], strengths[node.index] = +strength(node, i, nodes);
+    for (i = 0; i < n; ++i){
+      node = nodes[i];
+      strengths[node.index] = +strength(node, i, nodes);
+    }
   }
 
   /**
@@ -84,8 +181,7 @@ export default function() {
      // 对于内部节点，积累来自子节点的力。内部节点不存放节点数据data.
     if (numChildren) {
       for (x = y = z = i = 0; i < numChildren; ++i) {
-        if ((q = treeNode[i]) && (c = Math.abs(q.value))) {
-          // console.log(q);
+        if ((q = treeNode[i]) && (c = Math.abs(q.value))) { //treeNode[i]存在且电荷量q.value不为空
           strength += q.value, weight += c, x += c * (q.x || 0), y += c * (q.y || 0), z += c * (q.z || 0);
         }
       }
@@ -129,7 +225,6 @@ export default function() {
    * @returns callback返回 true 意味着，当前节点及其子节点已完成计算，否则需要继续向下遍历其所有子节点
    */
   function apply(treeNode, x1, arg1, arg2, arg3) {
-    // console.log(node);
     if (!treeNode.value) return true;
     //用于选择不同维度下的值，ndim为3时，选择arg3
     var x2 = [arg1, arg2, arg3][nDim-1];
@@ -176,13 +271,18 @@ export default function() {
 
     //对每个节点单独处理，递归处理该正方形区域的所有子区域。为什么会有递归，因为这是树，肯定要递归处理
     do if (treeNode.data !== node) {
+      // console.log("aaaa");
       w = strengths[treeNode.data.index] * alpha / l;
-      // console.log(x);
         // if (node.dev_type == 17 && treeNode.data.dev_type == 16) {
         //   w = w/2
         // }
+        //
         // if (node.dev_type == 16 && treeNode.data.dev_type == 16) {
         //   w = w*2
+        // }
+        //是否可以让系数为dev_type的权重相比
+        // if (node.dev_type == treeNode.data.dev_type) {
+        //   w = w*weight.get(node.dev_type)
         // }
       node.vx += x * w;
       if (nDim > 1) { node.vy += y * w; }

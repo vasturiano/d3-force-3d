@@ -27,7 +27,7 @@ export default function(nodes, numDimensions) {
   var nDim = Math.min(MAX_DIMENSIONS, Math.max(1, Math.round(numDimensions))),
       simulation,
       // count = 1,
-      // cishu = 1,
+      cishu = 0,
       alpha = 1,    //alpha表示simulation当前的状态
       /**
        * alphaMin与target区别：alphaMin设置最小 alpha，当当前 alpha 低于它时，它将负责停止模拟。
@@ -78,7 +78,9 @@ export default function(nodes, numDimensions) {
       forces.forEach(function (force) {
         force(alpha); //调用注册的 力模型，并传入当前新的 alpha 值
       });
-
+      // if (cishu == 0) {
+      //   break
+      // }
       //通过 velocity × [velocityDecay] 来递减每个节点的速度；最后根据速度计算出每个节点的位置
       for (i = 0; i < n; ++i) {
         node = nodes[i];
@@ -111,6 +113,9 @@ export default function(nodes, numDimensions) {
     for (var i = 0, n = nodes.length, node; i < n; ++i) {
       node = nodes[i], node.index = i;
       node.sourceCount = 0
+      // node.fx = 20
+      // node.fy = 20
+      // node.fz = 20
       //如果node中不含x、 y值，则按默认方法计算。
       if (node.fx != null) node.x = node.fx;
       if (node.fy != null) node.y = node.fy;
@@ -119,11 +124,14 @@ export default function(nodes, numDimensions) {
         var radius = initialRadius * (nDim > 2 ? Math.cbrt(0.5 + i) : (nDim > 1 ? Math.sqrt(0.5 + i) : i)),
           rollAngle = i * initialAngleRoll,
           yawAngle = i * initialAngleYaw;
+          // radius = 0
         if (nDim === 1) {
           node.x = radius;
         } else if (nDim === 2) {
           node.x = radius * Math.cos(rollAngle);
           node.y = radius * Math.sin(rollAngle);
+          // node.x = 20
+          // node.y = 20
         } else { // 3 dimensions: use spherical distribution along 2 irrational number angles
           node.x = radius * Math.sin(rollAngle) * Math.cos(yawAngle);
           node.y = radius * Math.cos(rollAngle);

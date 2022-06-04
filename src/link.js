@@ -56,26 +56,12 @@ export default function(links) {
         l = Math.sqrt(x * x + y * y + z * z);
         l = (l - distances[i]) / l * alpha * strengths[i];
         x *= l, y *= l, z *= l;
-        // console.log(bias);
-        if (source.dev_net==4 || target.dev_net==4) {
-        // if ((source.dev_type == 17 && target.dev_type==16) || (target.dev_type == 17 && source.dev_type==16)) {
-          // bias[i] *= bias[i]
-          b = Math.sqrt(bias[i])
-          // console.log(bias[i]);
-        // } 
-        // else if (source.dev_type == 16 && target.dev_type == 16) {
-          // b = Math.sqrt(b) 
-          // bias[i] = Math.cbrt(bias[i])
-          // console.log(bias[i]);
-          // bias[i] *= bias[i]
-          // console.log(bias[i]);
-          // b = Math.pow(bias[i],10)
-          // b = bias[i] * bias[i]
-          // console.log(bias[i],"--",Math.cbrt(bias[i]));
-        } else {
-          b = bias[i]
-        }
-        // b = bias[i]
+        // if (source.dev_net==4 && target.dev_net==4) {
+        //   b = bias[i]
+        // } else {
+        //   b = bias[i]*Math.max(source.dev_net/target.dev_net,target.dev_net/source.dev_net)
+        // }
+        b = bias[i]
         //对target和source的速度进行调整 bias[i]越大，引力越大
         target.vx -= x * (b);
         if (nDim > 1) { target.vy -= y * b; }
