@@ -4,15 +4,15 @@
  * 这个力模型的实现采用四叉树以及 Barnes–Hut approximation大大提高了性能。
  * 精确度可以使用 theta 参数自定义。
  * 与弹簧力不同的是，弹簧力仅仅影响两端的节点，而电荷力是全局的: 每个节点都受到其他所有节点的影响，甚至他们处于不连通的子图
- * 
- * 
+ *
+ *
  * 为什么采用BH算法以及四叉树？
  * 因为对于每个节点要计算其它所有节点对它的作用力，这样时间复杂度就是n方
  * 因为有些节点距离当前节点很远，所以可将多个节点看成一团，质量就是整体质量，中心点是它们的质心。这就是BH算法。
  * 那如何分辨哪些节点距离这个节点远呢,如何将这些节点团的边界也即矩阵大小找到呢？用到四叉树。
  * 当节点团的面积/（节点团的质心坐标与当前节点坐标的距离的平方）< theta时，将之看做一团。否则仍逐个遍历。
- * 
- * 
+ *
+ *
  * 四叉树如何划分空间的？如果当前平面如果当前平面（或空间）所含的质点数量大于 1，
  * 则把该平面等分成四个子平面，并按照同样的方法递归地分割这四个子平面，直到每个子平面只包含一个质点为止
  * 四叉树怎么判断是内部节点还是叶子结点？
@@ -42,9 +42,10 @@ export default function() {
   averageAllDistance = sumDistance/countProv
   //获得各省代码与省会之间转换关系
   var codeToCap = codeToProvince.mapping
-  var hashcodeToCap = new Map() 
+  var hashcodeToCap = new Map()
   codeToCap.forEach(d=>hashcodeToCap.set(d.prov_aid,d.prov))
-  console.log("manybody&&&&&&&&&&&");
+  hashcodeToCap.set(11022,"上海")
+  console.log("manybody!!!!!!!");
   var nodes,
       nDim,
       node,
@@ -78,7 +79,7 @@ export default function() {
     // console.log(averageDistance);
     // console.log(averageAllDistance);
   }
- 
+
 
   function getCurrentAverageDistance(n) {
     var provinceSet = new Set()
@@ -110,35 +111,35 @@ export default function() {
       var treeNode = nodes[j]
       // console.log("aaaa");
       if (treeNode !== node) {
-      var x = treeNode.x - node.x, 
+      var x = treeNode.x - node.x,
           y = (nDim > 1 ? treeNode.y - node.y : 0),
           z = (nDim > 2 ? treeNode.z - node.z : 0),
           l = x * x + y * y + z * z;
-          var w = strengths[treeNode.index] * alpha / l;
+          var w = strengths[treeNode.index] * alpha / l ;
+          // w = w/averageAllDistance
           // console.log(node,treeNode);
           if (node.prov_aid != treeNode.prov_aid) {
             if ((hashcodeToCap.get(node.prov_aid) != undefined) && hashcodeToCap.get(treeNode.prov_aid) != undefined) {
               var keycap = hashcodeToCap.get(node.prov_aid)+"-"+hashcodeToCap.get(treeNode.prov_aid)
               var keycapDistance = capDistance.get(keycap)
               // if (+(keycapDistance) > averageDistance) {
-                // console.log("pow:",Math.pow(keycapDistance/averageDistance,2));
-                // node.vx += x * w * Math.pow(keycapDistance/averageDistance,2);
-                w = w/10
+                w = w * Math.pow(keycapDistance/averageDistance,2)
+                // w = w/10
                 node.vx += x * w ;
-                // console.log("node.vx",node.vx);
                 if (nDim > 1) { node.vy += y * w; }
                 if (nDim > 2) { node.vz += z * w; }
               // }
             } else {
-              w = w/20
+              // w = w/10
               node.vx += x * w;
               if (nDim > 1) { node.vy += y * w; }
               if (nDim > 2) { node.vz += z * w; }
             }
           } else {
             // w = -w
-            // w = 0
-            w = w/20
+            w = 0
+            // w = w/10
+            // w = w * Math.pow(keycapDistance/averageDistance,2)
             node.vx += x * w;
             if (nDim > 1) { node.vy += y * w; }
             if (nDim > 2) { node.vz += z * w; }
@@ -148,7 +149,7 @@ export default function() {
     // console.log(node.vx);
   }
   /**
-   * 
+   *
    * @returns 初始化各个节点的strength
    */
   function initialize() {
@@ -165,17 +166,17 @@ export default function() {
    * 自四叉树由下而上，即后序方式，求所有节点的合坐标与合静电电荷量(quadTree),value是电量，x是坐标
    * 求解时对于索引节点（叶子结点），使用quad.x=∑(),对于合电荷量直接相加。
    * 而对于真实节点（叶节点），坐标即为当前真实节点坐标，静电电荷量则为真实节点及其下挂真实节点 strength 总和
-   * 
+   *
    * 每一个单独的点都放置在一个单独的 node 中；重合的点由链表表示.
    * data - 与当前点关联的数据，也就是传递给 quadtree.add 的数据
    * treNode是四叉树中的节点，是一个结构体，里面有一项就是具体的data,还有x,y,value等数据
    * 也就是说如果看做一团时取treeNode的值，如果是单个节点取treeNode.data也即每个节点的值
    * 为什么没有左子树和右子树？因为这里是用链表表示的
-   * @param {*} treeNode 
+   * @param {*} treeNode
    */
   function accumulate(treeNode) {
     var strength = 0, q, c, weight = 0, x, y, z, i; //strength可以看做节点的电荷力或重量
-    var numChildren = treeNode.length;  
+    var numChildren = treeNode.length;
 
     // For internal nodes, accumulate forces from children.
      // 对于内部节点，积累来自子节点的力。内部节点不存放节点数据data.
@@ -212,16 +213,16 @@ export default function() {
   }
 
   /**
-   * 
+   *
    * 如果四叉树单元的宽度w与从节点到单元质心的距离l的比值w/l小于θ，
    * 则给定单元中的所有节点都被视为单个节点，而不是单独处理
    * 这里怎么判断某个节点是否被遍历过？因为是链表，所以直接遍历就行，不会有回溯
    * treeNode是前序遍历时遍历到的临时节点，node全局变量，是原始所有节点中的一个。
-   * @param {treeNode 为四叉树索引节点，内有索引下属子节点的合坐标 (quad.x,quad.y) 和合电荷量} treeNode 
-   * @param {*} x1 
-   * @param {*} arg1 
-   * @param {*} arg2 
-   * @param {*} arg3 
+   * @param {treeNode 为四叉树索引节点，内有索引下属子节点的合坐标 (quad.x,quad.y) 和合电荷量} treeNode
+   * @param {*} x1
+   * @param {*} arg1
+   * @param {*} arg2
+   * @param {*} arg3
    * @returns callback返回 true 意味着，当前节点及其子节点已完成计算，否则需要继续向下遍历其所有子节点
    */
   function apply(treeNode, x1, arg1, arg2, arg3) {
@@ -298,8 +299,8 @@ export default function() {
   };
 
   /**
-   * 
-   * @param {*} _ 
+   *
+   * @param {*} _
    * @returns 如果指定了 strength 则将强度访问器设置为指定的数值或者方法，重新评估每个节点的强度访问器并返回此电荷力。
    * 若强度为正值则表示节点之间相互吸引，负值表示节点之间相互排斥。
    * 如果没有指定 strength 则返回当前的强度访问器
@@ -309,8 +310,8 @@ export default function() {
   };
 
   /**
-   * 
-   * @param {*} _ 
+   *
+   * @param {*} _
    * @returns 如果指定了 distance 则设置电荷力模型的最小节点间距参考距离。
    * 如果没有指定 distance 则返回当前默认的最小参考距离，默认为 1。
    * 最小间距在相邻的节点之间建立了一个强度上限以避免不稳定的情况。
@@ -321,8 +322,8 @@ export default function() {
   };
 
   /**
-   * 
-   * @param {*} _ 
+   *
+   * @param {*} _
    * @returns 如果指定了 distance 则将节点之间的最大距离设置为指定的值并返回当前力模型。
    * 如果没有指定 distance 则返回当前默认的最大距离，默认为无穷大。
    * 指定最大间距可以提高性能，有利于生成局部布局。
@@ -332,8 +333,8 @@ export default function() {
   };
 
   /**
-   * 
-   * @param {*} _ 
+   *
+   * @param {*} _
    * @returns 如果指定了 theta 则 Barnes–Hut 算法的临界阈值设置为指定的值并返回当前力模型。
    * 如果没有指定 theta 则返回当前的值，默认为 0.
    * 为了加快计算，这个力模型基于 Barnes–Hut approximation进行实现，其时间复杂度为 O(n log n)，其中 n 为 nodes 个数。

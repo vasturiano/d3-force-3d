@@ -3,7 +3,7 @@
  * 从形式上来说，假设节点 a 和节点 b 是两个独立的节点，则 a 和 b 之间最小距离为 radius(a) + radius(b)。
  * 为减少抖动，默认情况下，碰撞检测是一个可配置 strength(强度) 和 iteration count(迭代次数) 的软约束。
  * https://cloud.tencent.com/developer/article/1682977
- * https://blog.csdn.net/QQ276592716/article/details/45999831 
+ * https://blog.csdn.net/QQ276592716/article/details/45999831
 */
 import {binarytree} from "d3-binarytree";
 import {quadtree} from "d3-quadtree"; // 四叉树
@@ -24,9 +24,9 @@ function z(d) {
   return d.z + d.vz;
 }
 /**
- * 
- * @param {根据指定的 radius 创建一个新的圆形区域的碰撞检测。如果没有指定 radius 则默认所有的节点半径都为 1.} radius 
- * @returns 
+ *
+ * @param {根据指定的 radius 创建一个新的圆形区域的碰撞检测。如果没有指定 radius 则默认所有的节点半径都为 1.} radius
+ * @returns
  */
 export default function(radius) {
   console.log("collide");
@@ -34,7 +34,7 @@ export default function(radius) {
   /**
    * 如果指定了 iterations 则将每次应用碰撞检测力模型时候的迭代次数设置为指定的数值。
    * 如果没有指定 iterations 则返回当前的迭代次数，默认为 1。迭代次数越大，最终的布局越优
-   * 
+   *
    * 如果指定了 strength 则将碰撞强度设置为指定的数值，强度范围为 [0, 1]。并返回当前碰撞力模型。
    * 如果没有指定 strength 则返回当前的碰撞强度，默认为 0.7.
    */
@@ -50,12 +50,12 @@ export default function(radius) {
    * radius 则表示设置节点半径访问器，radius 可以是一个数值或者方法，如果是方法则会为每个节点调用，并返回碰撞检测力模型
    * 半径访问器为仿真中的每个节点调用并传递当前的节点 node 以及基于 0 的 index。
    * 其返回值在内部被保存，这样的话每个节点的半径仅在初始化以及使用新的半径访问器时才会被调用，而不是每次应用时候重新计算
-   */ 
+   */
   if (typeof radius !== "function") radius = constant(radius == null ? 1 : +radius);
 
   // 单例对象模式
   function force() {
-    var i, 
+    var i,
         n = nodes.length,
         tree,
         node,
@@ -145,10 +145,10 @@ export default function(radius) {
             // 但斥力的原因会使得节点的vx ,vy 趋近于0.
             // node.vx = B-A点x方向距离(也就是x) *= 斥力(也就是l) * [（rj = B半径平方）/( A半径平方+B半径平方)](也就是r)；
             //根据两个节点间的距离和两个节点的半径和斥力对node和data的速度进行调整
-            node.vx += (x *= l) * (r = (rj *= rj) / (ri2 + rj)); //原节点
+            node.vx += (x *= l) * (r = (rj *= rj) / (ri2 + rj))*2; //原节点
             // 同x方向
-            if (nDim > 1) { node.vy += (y *= l) * r; }
-            if (nDim > 2) { node.vz += (z *= l) * r; }
+            if (nDim > 1) { node.vy += (y *= l) * r*2; }
+            if (nDim > 2) { node.vz += (z *= l) * r*2; }
 
             data.vx -= x * (r = 1 - r); //遍历的节点
             if (nDim > 1) { data.vy -= y * r; }
@@ -200,11 +200,11 @@ export default function(radius) {
    * 将 nodes 数组分配给此力模型。
    * 这个方法在将力模型通过 simulation.force 添加到仿真中并且通过 simulation.nodes 指定节点数组时被调用。可以在初始化阶段执行必要的工作，
    * 比如评估每个节点的参数特征，要避免在每次使用力模型时执行重复的工作
-   * 
+   *
    * args 包含一个随机数生成器，以及当前dim维度。random会根据是否传进随机数生成函数选择随机数生成方法。
-   * 
+   *
    * includes方法用来判断一个数组是否包含一个指定的值，根据情况，如果包含则返回 true，否则返回 false
-   * find() 方法返回数组中满足提供的测试函数的第一个元素的值 
+   * find() 方法返回数组中满足提供的测试函数的第一个元素的值
   */
   force.initialize = function(_nodes, ...args) {
     nodes = _nodes; // 赋值节点

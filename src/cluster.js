@@ -1,19 +1,10 @@
-/*
- * @Author: lvxiansen 1023727097@qq.com
- * @Date: 2022-05-25 16:37:49
- * @LastEditors: lvxiansen 1023727097@qq.com
- * @LastEditTime: 2022-06-02 15:32:11
- * @FilePath: \d3-force-3d\src\cluster.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 export default function(centers = () => ({ x: 0, y: 0, z: 0 })) {
-  // console.log("ccccccccccccc");
   let nDim,
     nodes,
     centerpoints = [],
     strength = 0.1,
     centerInertia = 0.0;
-
+    console.log("cluster")
   function force(alpha) {
     alpha *= strength * alpha;
 
@@ -21,6 +12,7 @@ export default function(centers = () => ({ x: 0, y: 0, z: 0 })) {
     nodes.forEach((d, i) => {
       c = centerpoints[i];
       if (!c || c === d) return;
+      c.radius = c.radius || 1
 
       x = d.x - c.x;
       y = nDim > 1 ? d.y - c.y : 0;
@@ -44,7 +36,31 @@ export default function(centers = () => ({ x: 0, y: 0, z: 0 })) {
     });
   }
 
+  function getArray(nodes) {
+    var cityset = new Map()
+    nodes.forEach(function (node,i) {
+      if (!cityset.has(node.prov_aid)) {
+        var d = {x:node.x}
+        if (nDim > 1) {
+          d.y = node.y
+        }
+        if (nDim > 2) {
+          d.z = node.z
+        }
+        cityset.set(node.prov_aid,d)
+      } else {
+        cityset.set(node.prov_aid,cityset.get(node.prov_aid))
+      }
+    })
+    return cityset
+  }
   function initialize () {
+    if (nodes) {
+      var cityset = getArray(nodes)
+      centers = function (node) {
+        return cityset.get(node.prov_aid)
+      }
+    }
     centerpoints = (nodes || []).map(centers);
   }
 
