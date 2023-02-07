@@ -23,7 +23,7 @@ You can even use it as a rudimentary physics engine, say to simulate cloth:
 
 With this module update, you can also run the simulation in one, two or three dimensions:
 
-[<img alt="3D Graph" src="https://raw.githubusercontent.com/vasturiano/d3-force-3d/master/img/3dgraph.png" width="480">](https://bl.ocks.org/vasturiano/f59675656258d3f490e9faa40828c0e7)
+[<img alt="3D Graph" src="https://raw.githubusercontent.com/vasturiano/d3-force-3d/master/img/3dgraph.png" width="480">](https://observablehq.com/@vasturiano/multi-dimensional-d3-force-simulation)
 
 To use this module, create a [simulation](#simulation) for an array of [nodes](#simulation_nodes), and compose the desired [forces](#simulation_force). Then [listen](#simulation_on) for tick events to render the nodes as they update in your preferred graphics system, such as Canvas, SVG or WebGL.
 
