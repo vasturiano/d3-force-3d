@@ -29,7 +29,7 @@ To use this module, create a [simulation](#simulation) for an array of [nodes](#
 
 ## Installing
 
-If you use NPM, `npm install d3-force-3d`. You can also load directly from the global [npmJS](https://npmjs.com) registry, as a bundled [standalone library](https://unpkg.com/d3-force-3d). For vanilla HTML in modern browsers, import d3-force-3d from Skypack:
+If you use npm, `npm install d3-force-3d`. You can also load directly from the global [npmJS](https://npmjs.com) registry, as a bundled [standalone library](https://unpkg.com/d3-force-3d). For vanilla HTML in modern browsers, import d3-force-3d from Skypack:
 
 ```html
 <script type="module">
@@ -47,7 +47,6 @@ For legacy environments, you can load d3-force-3d’s UMD bundle from an npm-bas
 <script src="https://cdn.jsdelivr.net/npm/d3-dispatch@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-quadtree@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-timer@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
 <script src="https://unpkg.com/d3-binarytree"></script>
 <script src="https://unpkg.com/d3-octree"></script>
 <script src="https://unpkg.com/d3-force-3d"></script>
@@ -57,8 +56,6 @@ const simulation = d3.forceSimulation(nodes);
 
 </script>
 ```
-
-[Try d3-force-3d in your browser.](https://bl.ocks.org/vasturiano/f59675656258d3f490e9faa40828c0e7)
 
 ## API Reference
 
