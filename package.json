@@ -1,6 +1,6 @@
 {
   "name": "d3-force-3d",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Force-directed graph layout in 1D, 2D or 3D using velocity Verlet integration.",
   "homepage": "https://github.com/vasturiano/d3-force-3d",
   "repository": {
