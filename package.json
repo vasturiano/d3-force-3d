@@ -1,6 +1,6 @@
 {
   "name": "d3-force-3d",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Force-directed graph layout in 1D, 2D or 3D using velocity Verlet integration.",
   "homepage": "https://github.com/vasturiano/d3-force-3d",
   "repository": {
@@ -32,7 +32,9 @@
   "main": "src/index.js",
   "jsdelivr": "dist/d3-force-3d.min.js",
   "unpkg": "dist/d3-force-3d.min.js",
+  "types": "dist/d3-force-3d.d.ts",
   "exports": {
+    "types": "./dist/d3-force-3d.d.ts",
     "umd": "./dist/d3-force-3d.min.js",
     "default": "./src/index.js"
   },
@@ -49,7 +51,9 @@
     "@rollup/plugin-terser": "^0.4.0",
     "eslint": "^8.33.0",
     "mocha": "^10.2.0",
-    "rollup": "^3.14.0"
+    "rollup": "^3.14.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "typescript": "^5.4.4"
   },
   "scripts": {
     "test": "mocha 'test/**/*-test.js' && eslint src test",
