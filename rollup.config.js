@@ -1,20 +1,28 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
-import terser from "@rollup/plugin-terser";
+import terser from '@rollup/plugin-terser';
+import dts from 'rollup-plugin-dts';
 import meta from './package.json' assert { type: 'json' };
 
 const config = {
-  input: "src/index.js",
-  external: Object.keys(meta.dependencies || {}).filter(key => /^d3-/.test(key)),
+  input: 'src/index.js',
+  external: Object.keys(meta.dependencies || {}).filter((key) =>
+    /^d3-/.test(key)
+  ),
   output: {
     file: `dist/${meta.name}.js`,
-    name: "d3",
-    format: "umd",
+    name: 'd3',
+    format: 'umd',
     indent: false,
     extend: true,
     banner: `// ${meta.homepage} v${meta.version}`,
-    globals: Object.assign({}, ...Object.keys(meta.dependencies || {}).filter(key => /^d3-/.test(key)).map(key => ({[key]: "d3"})))
+    globals: Object.assign(
+      {},
+      ...Object.keys(meta.dependencies || {})
+        .filter((key) => /^d3-/.test(key))
+        .map((key) => ({ [key]: 'd3' }))
+    ),
   },
-  plugins: []
+  plugins: [],
 };
 
 export default [
@@ -23,16 +31,26 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: `dist/${meta.name}.min.js`
+      file: `dist/${meta.name}.min.js`,
     },
     plugins: [
       ...config.plugins,
       nodeResolve({ jsnext: true }),
       terser({
         output: {
-          preamble: config.output.banner
-        }
-      })
-    ]
-  }
+          preamble: config.output.banner,
+        },
+      }),
+    ],
+  },
+  {
+    input: 'src/index.d.ts',
+    output: [
+      {
+        file: `dist/${meta.name}.d.ts`,
+        format: 'es',
+      },
+    ],
+    plugins: [dts()],
+  },
 ];

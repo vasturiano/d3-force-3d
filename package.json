@@ -1,6 +1,6 @@
 {
   "name": "d3-force-3d",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Force-directed graph layout in 1D, 2D or 3D using velocity Verlet integration.",
   "homepage": "https://github.com/vasturiano/d3-force-3d",
   "repository": {
@@ -25,14 +25,16 @@
   },
   "type": "module",
   "files": [
-    "src/**/*.js",
-    "dist/**/*.js"
+    "src/**/*",
+    "dist/**/*"
   ],
   "module": "src/index.js",
   "main": "src/index.js",
   "jsdelivr": "dist/d3-force-3d.min.js",
   "unpkg": "dist/d3-force-3d.min.js",
+  "types": "dist/d3-force-3d.d.ts",
   "exports": {
+    "types": "./dist/d3-force-3d.d.ts",
     "umd": "./dist/d3-force-3d.min.js",
     "default": "./src/index.js"
   },
@@ -47,9 +49,15 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.0",
+    "@types/d3-force": "^3.0.9",
     "eslint": "^8.33.0",
     "mocha": "^10.2.0",
-    "rollup": "^3.14.0"
+    "rollup": "^3.14.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "typescript": "^5.4.4"
+  },
+  "peerDependencies": {
+    "@types/d3-force": "^3.0.9"
   },
   "scripts": {
     "test": "mocha 'test/**/*-test.js' && eslint src test",
