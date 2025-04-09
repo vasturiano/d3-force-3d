@@ -1,6 +1,6 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from "@rollup/plugin-terser";
-import meta from './package.json' assert { type: 'json' };
+import meta from './package.json' with { type: 'json' };
 
 const config = {
   input: "src/index.js",
